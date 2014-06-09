@@ -18,6 +18,7 @@ You should create a web application with these features
 * Unique username
 * Username should consist of only alphanumerics
 * Username should not be more than 20 characters in length
+
 **Log in page**
 * Accept login with username or email
 * Username/email is not case sensitive

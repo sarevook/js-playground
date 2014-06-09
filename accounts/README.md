@@ -52,10 +52,10 @@ You should create a web application with these features
 
 	
 Restrictions:
-1) Mongo is your database
-2) This should function on browsers IE9 and upwards
-3) This should be useable on any mobile device
-4) This will be run on an Ubuntu machine
+* Mongo is your database
+* This should function on browsers IE9 and upwards
+* This should be useable on any mobile device
+* This will be run on an Ubuntu machine
 
 
 

@@ -4,6 +4,8 @@ js-playground/accounts
 For this task
 You should create a web application with these features
 
+
+**Features**
 1. Create account page
 	* Unique email address
 	* Valid email address
@@ -51,12 +53,12 @@ You should create a web application with these features
 	
 
 	
-Restrictions:
+**Restrictions**
 * Mongo is your database
 * This should function on browsers IE9 and upwards
 * This should be useable on any mobile device
 * This will be run on an Ubuntu machine
 
 
-
+**Important**
 Please complete in a branch clearly marked with your Github account name

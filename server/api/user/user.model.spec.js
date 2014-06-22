@@ -33,6 +33,16 @@ describe('User Model', function() {
     });
   });
 
+  describe('should have a valid password', function() {
+    it('should have 8 characters', function(done) {
+      user.password = 'paco';
+      user.save(function(err) {
+        should.exist(err);
+        done();
+      }) 
+    });
+  });
+
   describe('should be a valid email address: ', function() {
     it('should be an unique email address', function(done) {
       user.save(function() {

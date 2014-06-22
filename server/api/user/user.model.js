@@ -78,6 +78,15 @@ UserSchema
     return hashedPassword.length;
   }, 'Password cannot be blank');
 
+// Validate empty password
+UserSchema
+  .path('hashedPassword')
+  .validate(function(hashedPassword) {
+    // if you are authenticating by any of the oauth strategies, don't validate
+    if (authTypes.indexOf(this.provider) !== -1) return true;
+    return hashedPassword.length==8;
+  }, 'Password needs to have 8 characters');
+
 // Validate email *@*.* form
 UserSchema
   .path('email')

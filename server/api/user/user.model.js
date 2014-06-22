@@ -146,12 +146,47 @@ UserSchema
     this.constructor.findOne({email: value}, function(err, user) {
       if(err) throw err;
       if(user) {
-        if(self.id === user.id) return respond(true);
+        if(self.email == user.email) {
+          return respond(true);
+        }
         return respond(false);
       }
       respond(true);
     });
 }, 'The specified email address is already in use.');
+
+// Validate username is not taken
+UserSchema
+  .path('name')
+  .validate(function(value, respond) {
+    var self = this;
+    this.constructor.findOne({name: value}, function(err, user) {
+      if(err) throw err;
+      if(user) {
+        if(self.name == user.name) return respond(true);
+        return respond(false);
+      }
+      respond(true);
+    });
+}, 'The specified username is already in use.');  
+
+// Username must be all alphanumeric characters
+UserSchema
+  .path('name')
+  .validate(function(hashedPassword) {
+    // if you are authenticating by any of the oauth strategies, don't validate
+    if (authTypes.indexOf(this.provider) !== -1) return true;
+    return hashedPassword.replace(/[A-Za-z0-9]/gi, "").length==0;
+  }, 'Username must be all alphanumeric characters');
+
+// Username must be less than 20 chars
+UserSchema
+  .path('name')
+  .validate(function(hashedPassword) {
+    // if you are authenticating by any of the oauth strategies, don't validate
+    if (authTypes.indexOf(this.provider) !== -1) return true;
+    return hashedPassword.length<=20;
+  }, 'Username must be no more than 20 chars');
 
 var validatePresenceOf = function(value) {
   return value && value.length;

@@ -19,11 +19,16 @@ angular.module('srcApp')
           $location.path('/');
         })
         .catch( function(err) {
+          console.log(err);
           err = err.data;
           $scope.errors = {};
 
           // Update validity of form fields that match the mongoose errors
           angular.forEach(err.errors, function(error, field) {
+            if(field=="hashedPassword") {
+              field = "password";
+            }
+
             form[field].$setValidity('mongoose', false);
             $scope.errors[field] = error.message;
           });

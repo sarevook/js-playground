@@ -33,6 +33,35 @@ describe('User Model', function() {
     });
   });
 
+  describe('should be a valid email address: ', function() {
+    it('should be an unique email address', function(done) {
+      user.save(function() {
+        var userDup = new User(user);
+        userDup.save(function(err) {
+          should.exist(err);
+          done();
+        });
+      });
+    });
+
+    it("shouldn't be an empty email", function(done) {
+      user.email = '';
+      user.save(function(err) {
+        should.exist(err);
+        done();
+      });
+    });
+
+    it("should have the form *@*.*", function(done) {
+      user.email = 'test';
+      user.save(function(err) {
+        should.exist(err);
+        user.email = 'test@test.com';
+        done();
+      });
+    });
+  });
+
   describe('should have a valid password', function() {
     it('should have 8 characters', function(done) {
       user.password = 'paco';
@@ -69,33 +98,12 @@ describe('User Model', function() {
         done();
       }) 
     });
-  });
-
-  describe('should be a valid email address: ', function() {
-    it('should be an unique email address', function(done) {
-      user.save(function() {
-        var userDup = new User(user);
-        userDup.save(function(err) {
-          should.exist(err);
-          done();
-        });
-      });
-    });
-
-    it("shouldn't be an empty email", function(done) {
-      user.email = '';
+    it('should allow something like Pacopa1! for a password', function(done) {
+      user.password = 'Pacopa1!';
       user.save(function(err) {
-        should.exist(err);
+        should.not.exist(err);
         done();
-      });
-    });
-
-    it("should have the form *@*.*", function(done) {
-      user.email = 'test';
-      user.save(function(err) {
-        should.exist(err);
-        done();
-      });
+      }) 
     });
   });
 

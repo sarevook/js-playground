@@ -87,6 +87,48 @@ UserSchema
     return hashedPassword.length==8;
   }, 'Password needs to have 8 characters');
 
+// Password must contain at least one uppercase character
+UserSchema
+  .path('hashedPassword')
+  .validate(function(hashedPassword) {
+    // if you are authenticating by any of the oauth strategies, don't validate
+    if (authTypes.indexOf(this.provider) !== -1) return true;
+    return hashedPassword.replace(/[^A-Z]/g, "").length>0;
+  }, 'Password must contain at least one uppercase character');
+
+// Password must contain at least one number
+UserSchema
+  .path('hashedPassword')
+  .validate(function(hashedPassword) {
+    // if you are authenticating by any of the oauth strategies, don't validate
+    if (authTypes.indexOf(this.provider) !== -1) return true;
+    return hashedPassword.replace(/[^0-9]/g, "").length>0;
+  }, 'Password must contain at least one number');
+
+// Password must contain at least one non-alphanumeric character
+UserSchema
+  .path('hashedPassword')
+  .validate(function(hashedPassword) {
+    // if you are authenticating by any of the oauth strategies, don't validate
+    if (authTypes.indexOf(this.provider) !== -1) return true;
+    return hashedPassword.replace(/[A-Za-z0-9]/gi, "").length>0;
+  }, 'Password must contain at least one non-alphanumeric character');
+
+// Password should not contain more than 3 consecutive characters that are the same
+UserSchema
+  .path('hashedPassword')
+  .validate(function(hashedPassword) {
+    // if you are authenticating by any of the oauth strategies, don't validate
+    if (authTypes.indexOf(this.provider) !== -1) return true;
+    for(var i=0; i<hashedPassword.length; i++) {
+      var index = hashedPassword.search(Array(4).join(hashedPassword.charAt(i)));
+      if(index!=-1) {
+        return false
+      }
+    }
+    return true;
+  }, 'Password should not contain more than 3 consecutive characters that are the same');  
+
 // Validate email *@*.* form
 UserSchema
   .path('email')

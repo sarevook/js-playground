@@ -78,7 +78,7 @@ UserSchema
     return hashedPassword.length;
   }, 'Password cannot be blank');
 
-// Validate empty password
+// Validate password length == 8
 UserSchema
   .path('hashedPassword')
   .validate(function(hashedPassword) {

@@ -41,6 +41,34 @@ describe('User Model', function() {
         done();
       }) 
     });
+    it('should contain at least one uppercase character', function(done) {
+      user.password = 'pacopaco';
+      user.save(function(err) {
+        should.exist(err);
+        done();
+      }) 
+    });
+    it('should contain at least one number', function(done) {
+      user.password = 'Pacopaco';
+      user.save(function(err) {
+        should.exist(err);
+        done();
+      }) 
+    });
+    it('should contain at least one non-alphanumeric character', function(done) {
+      user.password = 'Pacopac1';
+      user.save(function(err) {
+        should.exist(err);
+        done();
+      }) 
+    });
+    it('should not contain more than 3 consecutive characters that are the same', function(done) {
+      user.password = 'Paaapa1!';
+      user.save(function(err) {
+        should.exist(err);
+        done();
+      }) 
+    });
   });
 
   describe('should be a valid email address: ', function() {

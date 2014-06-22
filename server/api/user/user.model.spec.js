@@ -33,18 +33,18 @@ describe('User Model', function() {
     });
   });
 
-  it('should have an unique email address', function(done) {
-    user.save(function() {
-      var userDup = new User(user);
-      userDup.save(function(err) {
-        should.exist(err);
-        done();
+  describe('should be a valid email address: ', function() {
+    it('should be an unique email address', function(done) {
+      user.save(function() {
+        var userDup = new User(user);
+        userDup.save(function(err) {
+          should.exist(err);
+          done();
+        });
       });
     });
-  });
 
-  describe('should be a valid email address: ', function() {
-    it("email can't be empty", function(done) {
+    it("shouldn't be an empty email", function(done) {
       user.email = '';
       user.save(function(err) {
         should.exist(err);
@@ -52,10 +52,9 @@ describe('User Model', function() {
       });
     });
 
-    it("email should have the form *@*.*", function(done) {
+    it("should have the form *@*.*", function(done) {
       user.email = 'test';
       user.save(function(err) {
-        console.log(err);
         should.exist(err);
         done();
       });

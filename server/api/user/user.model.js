@@ -78,6 +78,15 @@ UserSchema
     return hashedPassword.length;
   }, 'Password cannot be blank');
 
+// Validate email *@*.* form
+UserSchema
+  .path('email')
+  .validate(function(value, respond) {
+    // run a regexp to validate email
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    respond(re.test(value));
+  }, 'Email needs to be in the *@*.* form');
+
 // Validate email is not taken
 UserSchema
   .path('email')
@@ -143,9 +152,11 @@ UserSchema.methods = {
    * @api public
    */
   encryptPassword: function(password) {
-    if (!password || !this.salt) return '';
-    var salt = new Buffer(this.salt, 'base64');
-    return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
+    //Removed encryption for easier validation, not a good practice!!
+    return password;
+    // if (!password || !this.salt) return '';
+    // var salt = new Buffer(this.salt, 'base64');
+    // return crypto.pbkdf2Sync(password, salt, 10000, 64).toString('base64');
   }
 };
 

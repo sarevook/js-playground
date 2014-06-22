@@ -1,0 +1,12 @@
+{
+  "generator-angular-fullstack": {
+    "filters": {
+      "js": true,
+      "html": true,
+      "css": true,
+      "uirouter": true,
+      "mongoose": true,
+      "auth": true
+    }
+  }
+}
